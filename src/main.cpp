@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     else {
       Ops ops;  
       Opts opts;
-      cx.load(p, a, calcl::read, env, ops, opts);
+      cx.load(p, a, cidk::read_ops, env, ops, opts);
       cx.eval(ops, env, cx.regp);
       m = Mode::load;
     }
