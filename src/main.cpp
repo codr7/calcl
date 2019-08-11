@@ -12,12 +12,7 @@ using namespace std;
 using namespace cidk;
 using namespace calcl;
 
-enum struct Mode {load, repl};
-
-int main(int argc, char *argv[]) {
-  const Pos &p(Pos::_);
-  Mode m(Mode::repl);
-  
+int main(int argc, char *argv[]) {   
   Cx cx;
   Env env(cx, cx.env);
   
@@ -28,18 +23,15 @@ int main(int argc, char *argv[]) {
     else {
       Ops ops;  
       Opts opts;
-      cx.load(p, a, cidk::read_ops, env, ops, opts);
+      cx.load(Pos::_, a, cidk::read_ops, env, ops, opts);
       cx.eval(ops, env, cx.regp);
-      m = Mode::load;
     }
   }
 
-  if (m == Mode::repl) {
-    repl(cx,
-         str("calcl v", calcl::VERSION[0], '.', calcl::VERSION[1]),
-         calcl::read,
-         cin, cout);
-  }
+  repl(cx,
+       str("calcl v", calcl::VERSION[0], '.', calcl::VERSION[1]),
+       calcl::read,
+       cin, cout);
   
   if (cx.debug) { cx.deinit(); }
   return 0;
