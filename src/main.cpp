@@ -6,6 +6,7 @@
 #include "cidk/repl.hpp"
 
 #include "calcl/calcl.hpp"
+#include "calcl/read.hpp"
 
 using namespace std;
 using namespace cidk;
@@ -27,14 +28,17 @@ int main(int argc, char *argv[]) {
     else {
       Ops ops;  
       Opts opts;
-      cx.load(p, a, env, ops, opts);
+      cx.load(p, a, calcl::read, env, ops, opts);
       cx.eval(ops, env, cx.regp);
       m = Mode::load;
     }
   }
 
   if (m == Mode::repl) {
-    repl(cx, str("calcl v", calcl::VERSION[0], '.', calcl::VERSION[1]), cin, cout);
+    repl(cx,
+         str("calcl v", calcl::VERSION[0], '.', calcl::VERSION[1]),
+         calcl::read,
+         cin, cout);
   }
   
   if (cx.debug) { cx.deinit(); }
