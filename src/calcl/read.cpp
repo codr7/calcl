@@ -27,11 +27,7 @@ namespace calcl {
     return {};
   }
 
-  bool read_three(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    auto x(read_one(cx, pos, in));
-    if (!x) { return false; }
-    out.emplace_back(cx, pos, ops::Push, *x);
-
+  bool read_two(Cx &cx, Pos &pos, istream &in, Ops &out) {
     Pos vp(pos);
     auto op(read_one(cx, pos, in));
     if (!op) { return false; }
@@ -46,7 +42,14 @@ namespace calcl {
     return true;
   }
 
+  bool read_three(Cx &cx, Pos &pos, istream &in, Ops &out) {
+    auto x(read_one(cx, pos, in));
+    if (!x) { return false; }
+    out.emplace_back(cx, pos, ops::Push, *x);
+    return read_two(cx, pos, in, out);
+  }
+
   void read(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    while (read_three(cx, pos, in, out));
+    if (read_three(cx, pos, in, out)) { while (read_two(cx, pos, in, out)); }
   }
 }
