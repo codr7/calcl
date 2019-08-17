@@ -35,7 +35,13 @@ namespace calcl {
         }
       }
         
-      out << cx.peek(p) << endl << "  ";
+      if (cx.stackp > &cx.stack[0]) {
+        out << cx.peek(p);
+      } else {
+        out << "n/a";
+      }
+
+      out << endl << "  ";
     }
   }
 }

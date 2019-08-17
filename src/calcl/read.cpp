@@ -1,6 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/ops/push.hpp"
-#include "cidk/ops/call_bin.hpp"
+#include "cidk/ops/dispatch.hpp"
 #include "cidk/read.hpp"
 
 #include "calcl/read.hpp"
@@ -42,7 +42,7 @@ namespace calcl {
     
     vp = pos;
     if (!read_val(cx, pos, in, out)) { throw ESys(vp, "Missing right operand"); }
-    out.emplace_back(cx, pos, ops::CallBin, *op);
+    out.emplace_back(cx, pos, ops::Dispatch, *op);
     return true;
   }
 
