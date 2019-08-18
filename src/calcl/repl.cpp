@@ -29,7 +29,12 @@ namespace calcl {
           stringstream in(line);
           read(cx, p, in, ops);
           cx.compile(ops, opts, env);
-          cx.eval(ops, env, opts, cx.regp);
+
+          for (auto &eid: opts.ext_ids) {
+            throw ESys(eid.pos, "Unknown id: ", eid.id);
+          }
+          
+          cx.eval(ops, env, opts);
         } catch (const exception &e) {
           out << e.what() << endl;
         }
