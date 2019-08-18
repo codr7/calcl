@@ -4,6 +4,4 @@
 
 using namespace std;
 
-void cidk_pluginit(Cx &cx) {
-  cout << "pluginit!" << endl;
-}
+void cidk_pluginit(Cx &cx) {}
