@@ -5,6 +5,7 @@
 #include "cidk/ext_id.hpp"
 
 #include "calcl/calcl.hpp"
+#include "calcl/plugin.hpp"
 #include "calcl/read.hpp"
 #include "calcl/repl.hpp"
 
@@ -16,6 +17,7 @@ enum struct Mode {nil, load, repl};
 
 int main(int argc, char *argv[]) {   
   Cx cx;
+  cidk_pluginit(cx);
   Env env(cx, cx.env);
   Mode m(Mode::nil);
 

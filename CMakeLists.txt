@@ -13,7 +13,7 @@ target_include_directories(lib_shared PUBLIC src/)
 
 add_executable(calcl ${src} src/main.cpp)
 target_include_directories(calcl PUBLIC src/)
-target_link_libraries(calcl cidk dl stdc++fs)
+target_link_libraries(calcl dl stdc++fs cidk)
 
 install(FILES build/calcl DESTINATION bin PERMISSIONS WORLD_EXECUTE)
 install(FILES build/libcalcl.so DESTINATION lib)

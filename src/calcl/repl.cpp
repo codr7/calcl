@@ -12,7 +12,7 @@ namespace calcl {
     out <<
       "calcl v" << VERSION[0] << '.' << VERSION[1] << endl << endl <<
       "Press Return to evaluate." << endl <<
-      "Empty input clears stack and Ctrl+D exits." << endl << endl <<
+      "Empty input clears result and Ctrl+D exits." << endl << endl <<
       "  ";
 
     Env env(cx, cx.env);
