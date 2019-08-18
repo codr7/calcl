@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="257.40774"
+     inkscape:cx="84.166578"
      inkscape:cy="756.31257"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -53,30 +53,31 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g4192"
+       transform="translate(-62.596629,-85.290797)"
+       id="g4192-3"
        inkscape:export-xdpi="60"
        inkscape:export-ydpi="60">
       <text
          transform="scale(0.93528372,1.0691943)"
          sodipodi:linespacing="125%"
-         id="text4136"
+         id="text4136-6"
          y="394.52826"
          x="278.24496"
          style="font-style:normal;font-weight:normal;font-size:94.94805908px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold'"
-           id="tspan4140"
+           id="tspan4140-7"
            y="394.52826"
            x="278.24496"
            sodipodi:role="line"><tspan
-             id="tspan4142"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold';fill:#800000;fill-opacity:0.78431374">01</tspan><tspan
-             id="tspan4144"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold';fill:#c8ab37;fill-opacity:0.78431374">0</tspan></tspan></text>
+             id="tspan4142-5"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold';fill:#008000;fill-opacity:0.78431373">01</tspan><tspan
+             id="tspan4144-3"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold';fill:#c8ab37;fill-opacity:0.78431373">0</tspan></tspan></text>
       <text
          transform="scale(0.93528372,1.0691943)"
          sodipodi:linespacing="125%"
-         id="text4166"
+         id="text4166-5"
          y="473.19952"
          x="277.39044"
          style="font-style:normal;font-weight:normal;font-size:94.94805908px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -84,12 +85,12 @@
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold'"
            y="473.19952"
            x="277.39044"
-           id="tspan4168"
+           id="tspan4168-6"
            sodipodi:role="line"><tspan
-             id="tspan4170"
-             style="fill:#c8ab37;fill-opacity:0.78431374">1</tspan><tspan
-             id="tspan4172"
-             style="fill:#008000;fill-opacity:0.78431374">01</tspan></tspan></text>
+             id="tspan4170-2"
+             style="fill:#c8ab37;fill-opacity:0.78431373">1</tspan><tspan
+             id="tspan4172-9"
+             style="fill:#800000;fill-opacity:0.78431373">01</tspan></tspan></text>
     </g>
   </g>
 </svg>
