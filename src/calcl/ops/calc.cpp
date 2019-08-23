@@ -3,17 +3,17 @@
 #include "cidk/expr.hpp"
 #include "cidk/types/expr.hpp"
 
-#include "calcl/ops/calcl.hpp"
+#include "calcl/ops/calc.hpp"
 #include "calcl/read.hpp"
 
 namespace calcl::ops {
-  const CalclType Calcl("calcl");
+  const CalcType Calc("calc");
 
-  CalclType::CalclType(const string &id): OpType(id) {}
+  CalcType::CalcType(const string &id): OpType(id) {}
 
-  void CalclType::init(Cx &cx, Op &op, const Val &expr) const { op.args[0] = expr; }
+  void CalcType::init(Cx &cx, Op &op, const Val &expr) const { op.args[0] = expr; }
 
-  void CalclType::compile(Cx &cx,
+  void CalcType::compile(Cx &cx,
                           OpIter &in,
                           const OpIter &end,
                           Env &env,
@@ -27,7 +27,7 @@ namespace calcl::ops {
     copy(ops.begin(), ops.end(), back_inserter(out));
   }
 
-  void CalclType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
+  void CalcType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     auto v(read_next(cx, pos, in));
     if (!v) { throw ESys(p, "Missing expression"); }

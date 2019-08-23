@@ -1,13 +1,13 @@
-#ifndef CALCL_OP_CALCL_HPP
-#define CALCL_OP_CALCL_HPP
+#ifndef CALCL_OP_CALC_HPP
+#define CALCL_OP_CALC_HPP
 
 #include "cidk/op.hpp"
 
 namespace calcl::ops {
   using namespace cidk;
   
-  struct CalclType: OpType {
-    CalclType(const string &id);
+  struct CalcType: OpType {
+    CalcType(const string &id);
 
     void init(Cx &cx, Op &op, const Val &expr) const;
 
@@ -21,7 +21,7 @@ namespace calcl::ops {
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
-  extern const CalclType Calcl;
+  extern const CalcType Calc;
 }
 
 #endif

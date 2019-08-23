@@ -1,13 +1,13 @@
 clock 1000 {
-  calcl(35 + 7);
+  calc(35 + 7);
   check({cp;}) {is 42;};
 
-  calcl((1 + 2) * (3 + 4) * 2);
+  calc((1 + 2) * (3 + 4) * 2);
   check({cp;}) {is 42;};
 
   do {
     let foo 35;
-    calcl(foo + 7);
+    calc(foo + 7);
     check({cp;}) {is 42;};
   };
 };

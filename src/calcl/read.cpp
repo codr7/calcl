@@ -44,7 +44,6 @@ namespace calcl {
     Pos vp(pos);
     auto op(read_next(cx, pos, in));
     if (!op) { return false; }
-    if (op->type != &cx.sym_type) { throw ESys(vp, "Invalid operation: ", *op); }
     
     vp = pos;
     if (!read_val(cx, pos, in, out)) { throw ESys(vp, "Missing right operand"); }
