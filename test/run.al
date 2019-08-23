@@ -10,6 +10,9 @@ clock 1000 {
     calc(foo + 7);
     check({cp;}) {is 42;};
   };
+
+  calc(7 + (a = (3 + 4) a * 5));
+  check({cp;}) {is 42;};
 };
 
 dump;

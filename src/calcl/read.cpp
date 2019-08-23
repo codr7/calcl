@@ -1,13 +1,28 @@
 #include "cidk/cx.hpp"
-#include "cidk/ops/push.hpp"
 #include "cidk/ops/dispatch.hpp"
+#include "cidk/ops/let.hpp"
+#include "cidk/ops/push.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/expr.hpp"
 
 #include "calcl/read.hpp"
 
-namespace calcl {  
-  optional<Val> read_next(Cx &cx, Pos &pos, istream &in) {
+namespace calcl {
+  Val read_id(Cx &cx, Pos &pos, istream &in) {
+    Pos p(pos);
+    stringstream out;
+    char c(0);
+    
+    while (in.get(c) && isgraph(c) && c != ';' && c != ')') {  
+      out << c;
+      pos.col++;
+    }
+
+    if (!in.eof()) { in.unget(); }
+    return Val(cx.sym_type, cx.intern(p, out.str()));
+  }
+
+  optional<Val> read_next(Cx &cx, Pos &pos, istream &in, Ops &out) {
     cidk::skip_ws(pos, in);
     
     if (char c(0); in.get(c)) {
@@ -26,7 +41,28 @@ namespace calcl {
       }
 
       if (isdigit(c)) { return read_num(cx, pos, in); }
-      if (isgraph(c)) { return read_id(cx, pos, in); }
+
+      if (isgraph(c)) {
+        Val id(calcl::read_id(cx, pos, in));
+        cidk::skip_ws(pos, in);
+
+        if (in.get(c)) {
+          if (c == '=') {
+            pos.col++; 
+            Pos vp(pos);
+            auto v(read_next(cx, pos, in, out));
+            if (!v) { throw ESys(vp, "Missing value"); }
+            out.emplace_back(cx, pos, ops::Let, id, *v);
+            return read_next(cx, pos, in, out);
+          }
+
+          in.unget();
+          return id;
+        } else {
+          return id;
+        }
+      }
+      
       throw ESys(pos, "Invalid input: ", c);
     }
 
@@ -34,7 +70,7 @@ namespace calcl {
   }
 
   bool read_val(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    auto v(read_next(cx, pos, in));
+    auto v(read_next(cx, pos, in, out));
     if (!v) { return false; }
     out.emplace_back(cx, pos, ops::Push, *v);
     return true;
@@ -42,7 +78,7 @@ namespace calcl {
 
   bool read_expr2(Cx &cx, Pos &pos, istream &in, Ops &out) {
     Pos vp(pos);
-    auto op(read_next(cx, pos, in));
+    auto op(read_next(cx, pos, in, out));
     if (!op) { return false; }
     
     vp = pos;
@@ -52,7 +88,9 @@ namespace calcl {
   }
 
   bool read_expr3(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    return read_val(cx, pos, in, out) ? read_expr2(cx, pos, in, out) : false;
+    bool ok(read_val(cx, pos, in, out));
+    if (ok) { read_expr2(cx, pos, in, out); }
+    return ok;
   }
 
   void read(Cx &cx, Pos &pos, istream &in, Ops &out) {

@@ -29,7 +29,7 @@ namespace calcl::ops {
 
   void CalcType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto v(read_next(cx, pos, in));
+    auto v(read_next(cx, pos, in, out));
     if (!v) { throw ESys(p, "Missing expression"); }
     read_eop(pos, in);
     out.emplace_back(cx, p, *this, *v);
