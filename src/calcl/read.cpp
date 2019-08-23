@@ -88,9 +88,7 @@ namespace calcl {
   }
 
   bool read_expr3(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    bool ok(read_val(cx, pos, in, out));
-    if (ok) { read_expr2(cx, pos, in, out); }
-    return ok;
+    return read_val(cx, pos, in, out) ? read_expr2(cx, pos, in, out) : false;
   }
 
   void read(Cx &cx, Pos &pos, istream &in, Ops &out) {
