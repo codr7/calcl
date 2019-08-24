@@ -13,7 +13,7 @@ namespace calcl {
     stringstream out;
     char c(0);
     
-    while (in.get(c) && isgraph(c) && c != ';' && c != ')') {  
+    while (in.get(c) && isgraph(c) && c != ')') {  
       out << c;
       pos.col++;
     }

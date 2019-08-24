@@ -1,4 +1,8 @@
 * add do around calcl group body
-* defconst instead of let if uppercase id
+** test
+* defconst instead of let if const
+** (const pi = 3.14 pi)
+** require assignment if const prefix
+** test
 * add :compile command
 ** dump ops
