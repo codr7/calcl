@@ -103,12 +103,8 @@ namespace calcl {
       }
 
       in.unget();
-      
-      if (bops.empty()) {
-        if (!read3(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
-      } else {
-        if (!read2(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
-      }
+      auto r(bops.empty() ? read3 : read2);
+      if (!r(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
     }
 
     return Val(cx.expr_type, out);
