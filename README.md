@@ -31,7 +31,7 @@ Empty input clears result and Ctrl+D exits.
 ```
 
 ### Semantics
-Operands are read and processed left to right.
+Operands are required to be separated by whitespace and are read and processed left to right.
 
 ```
   1 + 2 * 3
@@ -70,7 +70,7 @@ Prefixing names with `const` defines compile time constants.
 3.14
 ```
 
-Constants may not be rebound until the existing binding goes out of scope.
+Rebinding a constant results in a compile time error.
 
 ```
   (const foo = 7 (foo = 42 foo))

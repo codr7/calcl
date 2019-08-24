@@ -7,5 +7,5 @@ using namespace std;
 using namespace calcl;
 
 void cidk_pluginit(Cx &cx) {
-  cx.op_types.emplace("calc", &ops::Calc);
+  cx.add_op_type(ops::Calc);
 }
