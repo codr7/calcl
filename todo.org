@@ -1,0 +1,2 @@
+* add do around calcl group body
+* defconst instead of let if uppercase id
