@@ -1,4 +1,5 @@
 #include "cidk/cx.hpp"
+#include "cidk/ops/defconst.hpp"
 #include "cidk/ops/dispatch.hpp"
 #include "cidk/ops/do.hpp"
 #include "cidk/ops/let.hpp"
@@ -60,7 +61,16 @@ namespace calcl {
       if (isdigit(c)) { return read_num(cx, pos, in); }
 
       if (isgraph(c)) {
+        Pos p(pos);
         Val id(read_id(cx, pos, in));
+        bool is_const = false;
+        
+        if (id.as_sym == cx.intern(p, "const")) {
+          is_const = true;
+          cidk::skip_ws(pos, in);
+          id = read_id(cx, pos, in);
+        }
+        
         cidk::skip_ws(pos, in);
 
         if (in.get(c)) {
@@ -69,8 +79,16 @@ namespace calcl {
             Pos vp(pos);
             auto v(read_next(cx, pos, in, out));
             if (!v) { throw ESys(vp, "Missing value"); }
-            out.emplace_back(cx, pos, ops::Let, id, *v);
+
+            if (is_const) {
+              out.emplace_back(cx, pos, ops::Defconst, id, *v);
+            } else {
+              out.emplace_back(cx, pos, ops::Let, id, *v);
+            }
+
             return read_next(cx, pos, in, out);
+          } else if (is_const) {
+            throw ESys(p, "Missing assignment");
           }
 
           in.unget();

@@ -1,6 +1,2 @@
-* defconst instead of let if const prefix
-** (const pi = 3.14 pi)
-** require assignment following const
-** test
 * add :compile command
 ** dump ops

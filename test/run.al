@@ -16,6 +16,9 @@ clock 1000 {
 
   calc(a = 1 (a = 2 a) + a);
   check({cp;}) {is 3;};
+
+  calc(const pi = 3.14 pi);
+  check({cp;}) {is 3.14;};
 };
 
 dump;
