@@ -18,7 +18,6 @@ enum struct Mode {nil, load, repl};
 int main(int argc, char *argv[]) {   
   Cx cx;
   cidk_pluginit(cx);
-  Env env(cx, cx.env);
   Mode m(Mode::nil);
 
   while (--argc && ++argv) {
@@ -31,8 +30,8 @@ int main(int argc, char *argv[]) {
     } else {
       Ops ops;  
       Opts opts;
-      cx.load(Pos::_, a, cidk::read_ops, env, ops, opts);
-      cx.eval(ops, env, cx.regp);
+      cx.load(Pos::_, a, cidk::read_ops, cx.env, ops, opts);
+      cx.eval(ops, cx.env, cx.regp);
       if (m == Mode::nil) { m = Mode::load; }
     }
   }
