@@ -13,13 +13,24 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ sudo make install
-$ cd ../..
+$ cidk ../test/run.al
+39
+()
+```
+
+```
 $ git clone https://github.com/codr7/calcl.git
 $ cd calcl
 $ mkdir build
 $ cd build
 $ cmake ..
 $ sudo make install
+$ calcl ../test/run.al
+3
+()
+```
+
+```
 $ rlwrap calcl
 calcl v0.1
 
@@ -45,12 +56,12 @@ Groups may be used to control evaluation order.
 7
 ```
 
-Previous result may be accessed using `$`.
+Previous result may be popped using `_`.
 
 ```
   1
 1
-  $ + (2 * 3)
+  _ + (2 * 3)
 7
 ```
 

@@ -1,2 +1,3 @@
+* add lib/abc.al with % op
 * add :compile command
 ** dump ops

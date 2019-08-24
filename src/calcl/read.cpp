@@ -42,6 +42,8 @@ namespace calcl {
     cidk::skip_ws(pos, in);
     
     if (char c(0); in.get(c)) {
+      if (c == '_') { return cx.$; }
+      
       if (c == '(') {
         pos.col++;
         return read_group(cx, pos, in);
