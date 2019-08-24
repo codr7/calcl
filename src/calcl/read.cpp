@@ -10,16 +10,16 @@
 
 namespace calcl {
   void read(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    if (read_expr3(cx, pos, in, out)) { while (read_expr2(cx, pos, in, out)); }
+    if (read3(cx, pos, in, out)) { while (read2(cx, pos, in, out)); }
   }
 
-  bool read_expr3(Cx &cx, Pos &pos, istream &in, Ops &out) {
+  bool read3(Cx &cx, Pos &pos, istream &in, Ops &out) {
     bool ok(read_val(cx, pos, in, out));
-    if (ok) { read_expr2(cx, pos, in, out); }
+    if (ok) { read2(cx, pos, in, out); }
     return ok;
   }
 
-  bool read_expr2(Cx &cx, Pos &pos, istream &in, Ops &out) {
+  bool read2(Cx &cx, Pos &pos, istream &in, Ops &out) {
     Pos vp(pos);
     auto op(read_next(cx, pos, in, out));
     if (!op) { return false; }
@@ -105,9 +105,9 @@ namespace calcl {
       in.unget();
       
       if (bops.empty()) {
-        if (!read_expr3(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
+        if (!read3(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
       } else {
-        if (!read_expr2(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
+        if (!read2(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
       }
     }
 
