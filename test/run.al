@@ -13,6 +13,9 @@ clock 1000 {
 
   calc(7 + (a = (3 + 4) a * 5));
   check({cp;}) {is 42;};
+
+  calc(a = 1 (a = 2 a) + a);
+  check({cp;}) {is 3;};
 };
 
 dump;

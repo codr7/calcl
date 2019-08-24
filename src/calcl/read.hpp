@@ -4,8 +4,11 @@
 namespace calcl {
   using namespace cidk;
 
-  optional<Val> read_next(Cx &cx, Pos &pos, istream &in, Ops &out);
   void read(Cx &cx, Pos &pos, istream &in, Ops &out);
+  bool read_expr3(Cx &cx, Pos &pos, istream &in, Ops &out);
+  bool read_expr2(Cx &cx, Pos &pos, istream &in, Ops &out);
+  bool read_val(Cx &cx, Pos &pos, istream &in, Ops &out);
+  optional<Val> read_next(Cx &cx, Pos &pos, istream &in, Ops &out);
   Val read_group(Cx &cx, Pos &pos, istream &in);
 }
 

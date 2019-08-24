@@ -1,5 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/ops/dispatch.hpp"
+#include "cidk/ops/do.hpp"
 #include "cidk/ops/let.hpp"
 #include "cidk/ops/push.hpp"
 #include "cidk/read.hpp"
@@ -8,18 +9,32 @@
 #include "calcl/read.hpp"
 
 namespace calcl {
-  Val read_id(Cx &cx, Pos &pos, istream &in) {
-    Pos p(pos);
-    stringstream out;
-    char c(0);
-    
-    while (in.get(c) && isgraph(c) && c != ')') {  
-      out << c;
-      pos.col++;
-    }
+  void read(Cx &cx, Pos &pos, istream &in, Ops &out) {
+    if (read_expr3(cx, pos, in, out)) { while (read_expr2(cx, pos, in, out)); }
+  }
 
-    if (!in.eof()) { in.unget(); }
-    return Val(cx.sym_type, cx.intern(p, out.str()));
+  bool read_expr3(Cx &cx, Pos &pos, istream &in, Ops &out) {
+    bool ok(read_val(cx, pos, in, out));
+    if (ok) { read_expr2(cx, pos, in, out); }
+    return ok;
+  }
+
+  bool read_expr2(Cx &cx, Pos &pos, istream &in, Ops &out) {
+    Pos vp(pos);
+    auto op(read_next(cx, pos, in, out));
+    if (!op) { return false; }
+    
+    vp = pos;
+    if (!read_val(cx, pos, in, out)) { throw ESys(vp, "Missing right operand"); }
+    out.emplace_back(cx, pos, ops::Dispatch, *op);
+    return true;
+  }
+
+  bool read_val(Cx &cx, Pos &pos, istream &in, Ops &out) {
+    auto v(read_next(cx, pos, in, out));
+    if (!v) { return false; }
+    out.emplace_back(cx, pos, ops::Push, *v);
+    return true;
   }
 
   optional<Val> read_next(Cx &cx, Pos &pos, istream &in, Ops &out) {
@@ -40,10 +55,12 @@ namespace calcl {
         in.unget();
       }
 
+      if (c == ')') { return {}; }
+
       if (isdigit(c)) { return read_num(cx, pos, in); }
 
       if (isgraph(c)) {
-        Val id(calcl::read_id(cx, pos, in));
+        Val id(read_id(cx, pos, in));
         cidk::skip_ws(pos, in);
 
         if (in.get(c)) {
@@ -69,35 +86,11 @@ namespace calcl {
     return {};
   }
 
-  bool read_val(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    auto v(read_next(cx, pos, in, out));
-    if (!v) { return false; }
-    out.emplace_back(cx, pos, ops::Push, *v);
-    return true;
-  }
-
-  bool read_expr2(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    Pos vp(pos);
-    auto op(read_next(cx, pos, in, out));
-    if (!op) { return false; }
-    
-    vp = pos;
-    if (!read_val(cx, pos, in, out)) { throw ESys(vp, "Missing right operand"); }
-    out.emplace_back(cx, pos, ops::Dispatch, *op);
-    return true;
-  }
-
-  bool read_expr3(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    return read_val(cx, pos, in, out) ? read_expr2(cx, pos, in, out) : false;
-  }
-
-  void read(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    if (read_expr3(cx, pos, in, out)) { while (read_expr2(cx, pos, in, out)); }
-  }
-
   Val read_group(Cx &cx, Pos &pos, istream &in) {
     Pos p(pos);
-    Expr *out(cx.expr_type.pool.get(cx));
+    Expr *out(cx.expr_type.pool.get(cx)), *body(cx.expr_type.pool.get(cx));
+    out->ops.emplace_back(cx, p, ops::Do, Val(cx.expr_type, body));
+    auto &bops(body->ops);
     char c(0);
     
     for (;;) {
@@ -111,10 +104,10 @@ namespace calcl {
 
       in.unget();
       
-      if (out->ops.empty()) {
-        if (!read_expr3(cx, pos, in, out->ops)) { throw ESys(pos, "Open group"); }
+      if (bops.empty()) {
+        if (!read_expr3(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
       } else {
-        if (!read_expr2(cx, pos, in, out->ops)) { throw ESys(pos, "Open group"); }
+        if (!read_expr2(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
       }
     }
 

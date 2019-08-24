@@ -22,7 +22,7 @@ namespace calcl::ops {
     auto &p(in->pos);
     auto &expr(in->args[0]);
     expr.compile(p, env, opts);
-    if (expr.type != &cx.expr_type) { throw ESys(p, "Invalid expression", expr); }
+    if (expr.type != &cx.expr_type) { throw ESys(p, "Invalid group", expr); }
     auto &ops(expr.as_expr->ops);
     copy(ops.begin(), ops.end(), back_inserter(out));
   }
