@@ -1,11 +1,11 @@
-defun %(x Int y Int)(Int) {
+defun %(x Num y Num)(Num) {
   push x;
   cp;
 
   push y;
-  call /[Int Int];
+  dispatch /;
 
   push y;
-  call *[Int Int];
-  call -[Int Int];
+  dispatch *;
+  dispatch -;
 };

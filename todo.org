@@ -1,2 +1,4 @@
+* add fun support
+** defun sqrt(Int)(Int) etc.
 * add :compile command
 ** dump ops

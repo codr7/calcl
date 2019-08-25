@@ -120,16 +120,16 @@ The functionality of calcl may be extended using [cidk](https://github.com/codr7
 
 [lib/abc.al](lib/abc.al)
 ```
-defun %(x Int y Int)(Int) {
+defun %(x Num y Num)(Num) {
   push x;
   cp;
 
   push y;
-  call /[Int Int];
+  dispatch /;
 
   push y;
-  call *[Int Int];
-  call -[Int Int];
+  dispatch *;
+  dispatch -;
 };
 ```
 
@@ -139,8 +139,8 @@ $ rlwrap calcl lib/abc.al -repl
 Press Return to evaluate.
 Empty input clears result and Ctrl+D exits.
 
-  10 % 3
-1
+  1.0 % 0.3
+0.1
 ```
 
 ### License
