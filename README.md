@@ -93,7 +93,7 @@ Rebinding a constant results in a compile time error.
 
 ```
   (const foo = 7 (foo = 42 foo))
-Error in "n/a" at row 1, col 23:
+Error in "n/a" at row 1, col 16:
 Const let: foo
 n/a
 
@@ -117,7 +117,7 @@ $ cidk test.al
 ```
 
 ### Extending
-Besides C++; the functionality of calcl may be extended using [cidk](https://github.com/codr7/cidk) assembler, or any language capable of emitting the same. The following example implements a modulo operator in assembler.
+The functionality of calcl may be extended using [cidk](https://github.com/codr7/cidk) assembler, or any language capable of emitting the same. The following example implements a modulo operator in assembler.
 
 [lib/abc.al](lib/abc.al)
 ```

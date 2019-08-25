@@ -42,7 +42,10 @@ namespace calcl {
     cidk::skip_ws(pos, in);
     
     if (char c(0); in.get(c)) {
-      if (c == '_') { return cx.$; }
+      if (c == '_') {
+        pos.col++;
+        return cx.$;
+      }
       
       if (c == '(') {
         pos.col++;
@@ -58,7 +61,10 @@ namespace calcl {
         in.unget();
       }
 
-      if (c == ')') { return {}; }
+      if (c == ')') {
+        pos.col++;
+        return {};
+      }
 
       if (isdigit(c)) { return read_num(cx, pos, in); }
 
@@ -83,9 +89,9 @@ namespace calcl {
             if (!v) { throw ESys(vp, "Missing value"); }
 
             if (is_const) {
-              out.emplace_back(cx, pos, ops::Defconst, id, *v);
+              out.emplace_back(cx, p, ops::Defconst, id, *v);
             } else {
-              out.emplace_back(cx, pos, ops::Let, id, *v);
+              out.emplace_back(cx, p, ops::Let, id, *v);
             }
 
             return read_next(cx, pos, in, out);

@@ -16,7 +16,6 @@ namespace calcl {
       "  ";
 
     Env env(cx, cx.env);
-    Pos p("n/a");
     string line;
 
     while (getline(in, line)) {
@@ -24,9 +23,11 @@ namespace calcl {
         cx.stackp = &cx.stack[0];
       } else {
         try {
+          stringstream in(line);
+
+          Pos p("n/a");
           Ops ops;
           Opts opts;
-          stringstream in(line);
           read(cx, p, in, ops);
           cx.compile(ops, opts, env);
 
@@ -41,7 +42,7 @@ namespace calcl {
       }
         
       if (cx.stackp > &cx.stack[0]) {
-        out << cx.peek(p);
+        out << cx.peek(Pos::_);
       } else {
         out << "n/a";
       }
