@@ -5,7 +5,6 @@ calcl is a programmatic calculator, an extensible programming language designed 
 
 ```
 $ rlwrap calcl
-calcl v0.1
 
 Press Return to evaluate.
 Empty input clears result and Ctrl+D exits.
@@ -136,7 +135,6 @@ defun %(x Int y Int)(Int) {
 
 ```
 $ rlwrap calcl lib/abc.al -repl
-calcl v0.1
 
 Press Return to evaluate.
 Empty input clears result and Ctrl+D exits.

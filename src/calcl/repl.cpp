@@ -10,7 +10,7 @@
 namespace calcl {
   void repl(Cx &cx, istream &in, ostream &out) {
     out <<
-      "calcl v" << VERSION[0] << '.' << VERSION[1] << endl << endl <<
+      "calcl v" << VERSION << endl << endl <<
       "Press Return to evaluate." << endl <<
       "Empty input clears result and Ctrl+D exits." << endl << endl <<
       "  ";
