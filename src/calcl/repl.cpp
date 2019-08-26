@@ -12,7 +12,7 @@ namespace calcl {
     out <<
       "calcl v" << VERSION << endl << endl <<
       "Press Return to evaluate." << endl <<
-      "Empty input clears result and Ctrl+D exits." << endl << endl <<
+      "Empty input clears stack and Ctrl+D exits." << endl << endl <<
       "  ";
 
     string line;

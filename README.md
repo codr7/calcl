@@ -7,7 +7,7 @@ calcl is a programmatic calculator, an extensible programming language designed 
 $ rlwrap calcl
 
 Press Return to evaluate.
-Empty input clears result and Ctrl+D exits.
+Empty input clears stack and Ctrl+D exits.
 
   2 + (4 * 10)
 42
@@ -137,7 +137,7 @@ defun %(x Num y Num)(Num) {
 $ rlwrap calcl lib/abc.al -repl
 
 Press Return to evaluate.
-Empty input clears result and Ctrl+D exits.
+Empty input clears stack and Ctrl+D exits.
 
   1.0 % 0.3
 0.1
