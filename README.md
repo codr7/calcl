@@ -55,7 +55,7 @@ Groups may be used to change evaluation order.
 7
 ```
 
-Results may be referenced using `_`.
+Results may be popped using `_`.
 
 ```
   1
@@ -101,7 +101,7 @@ n/a
 ```
 
 ### Functions
-Functions may be defined by specifying an (optionally empty) argument list directly following the bound id. Any binary function may be used as operator.
+Functions may be defined by specifying an (optionally empty) argument list directly following the bound id. Binary functions may be used as operators.
 
 ```
   mod(x y) = (x - ((x / y) * y))
@@ -126,7 +126,7 @@ $ cidk test.al
 ```
 
 ### Extending
-The functionality of calcl may be extended using [cidk](https://github.com/codr7/cidk) assembler, or any language capable of emitting the same. The following example implements a generic modulo operator in assembler.
+The functionality of calcl may be extended using [cidk](https://github.com/codr7/cidk) assembler, or any language capable of emitting the same. The following example implements a generic modulo operator.
 
 [lib/abc.al](lib/abc.al)
 ```
@@ -153,13 +153,7 @@ Empty input clears stack and Ctrl+D exits.
 0.1
 ```
 
-A more convenient, but slightly slower, option is using the `calc` opcode. The reason for the slowdown is an extra push of `x`, which is simplified to `cp` above; something the current compiler isn't smart enough to do. Besides that minor difference, the generated code looks mostly the same and is inlined at compile time.
-
-```
-defun %(x Num y Num)(Num) { calc(x - ((x / y) * y)); };
-```
-
-In many cases, the entire definition may be expressed within calcl.
+A more convenient, but slightly slower, option is using the `calc` opcode. The reason for the slowdown is an extra push of `x`, which is simplified to `cp` above; something the current compiler isn't smart enough to do. Besides that minor difference, the same code is generated and inlined at compile time.
 
 ```
 calc(%(x y) = (x - ((x / y) * y)))
