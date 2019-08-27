@@ -9,7 +9,7 @@ namespace calcl {
   bool read2(Cx &cx, Pos &pos, istream &in, Ops &out);
   bool read_val(Cx &cx, Pos &pos, istream &in, Ops &out);
   optional<Val> read_next(Cx &cx, Pos &pos, istream &in, Ops &out);
-  Val read_group(Cx &cx, Pos &pos, istream &in);
+  Val read_group(Cx &cx, Pos &pos, istream &in, bool env = true);
 }
 
 #endif

@@ -100,6 +100,16 @@ n/a
 42
 ```
 
+### Functions
+Functions may be defined by specifying an (optionally empty) argument list directly following the bound id. Any binary function may be used as operator.
+
+```
+  mod(x y) = (x - ((x / y) * y))
+n/a
+  1.0 mod 0.3
+0.1
+```
+
 ### Linking
 calcl implements a [cidk](https://github.com/codr7/cidk)-plugin with a custom opcode that may be linked into any program for easy integration. 
 
@@ -143,10 +153,16 @@ Empty input clears stack and Ctrl+D exits.
 0.1
 ```
 
-A more convenient, but slightly slower, option is using the `calc` opcode. The reason for the slowdown is an extra push of `x`, which is simplified to `cp` above; something the current compiler isn't capable of. Otherwise the generated code looks mostly the same and is inlined at compile time.
+A more convenient, but slightly slower, option is using the `calc` opcode. The reason for the slowdown is an extra push of `x`, which is simplified to `cp` above; something the current compiler isn't smart enough to do. Besides that minor difference, the generated code looks mostly the same and is inlined at compile time.
 
 ```
-  defun %(x Num y Num)(Num) { calc(x - ((x / y) * y)); };
+defun %(x Num y Num)(Num) { calc(x - ((x / y) * y)); };
+```
+
+In many cases, the entire definition may be expressed within calcl.
+
+```
+calc(%(x y) = (x - ((x / y) * y)))
 ```
 
 ### License

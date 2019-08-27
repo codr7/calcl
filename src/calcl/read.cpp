@@ -1,5 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/ops/defconst.hpp"
+#include "cidk/ops/defun.hpp"
 #include "cidk/ops/dispatch.hpp"
 #include "cidk/ops/do.hpp"
 #include "cidk/ops/let.hpp"
@@ -24,7 +25,6 @@ namespace calcl {
     Pos vp(pos);
     auto op(read_next(cx, pos, in, out));
     if (!op) { return false; }
-    
     vp = pos;
     if (!read_val(cx, pos, in, out)) { throw ESys(vp, "Missing right operand"); }
     out.emplace_back(cx, pos, ops::Dispatch, *op);
@@ -32,21 +32,22 @@ namespace calcl {
   }
 
   bool read_val(Cx &cx, Pos &pos, istream &in, Ops &out) {
+    Pos p(pos);
     auto v(read_next(cx, pos, in, out));
     if (!v) { return false; }
-    out.emplace_back(cx, pos, ops::Push, *v);
+    out.emplace_back(cx, p, ops::Push, *v);
     return true;
   }
 
   optional<Val> read_next(Cx &cx, Pos &pos, istream &in, Ops &out) {
-    cidk::skip_ws(pos, in);
+    skip_ws(pos, in);
     
     if (char c(0); in.get(c)) {
       if (c == '_') {
         pos.col++;
         return cx.$;
       }
-      
+
       if (c == '(') {
         pos.col++;
         return read_group(cx, pos, in);
@@ -54,12 +55,11 @@ namespace calcl {
       
       if (c == '-') {
         char c1(in.get());
-        in.unget();
-        in.unget();
+        if (c1) { in.unget(); }
         if (isdigit(c1)) { c = c1; }
-      } else {
-        in.unget();
       }
+
+      in.unget();
 
       if (c == ')') {
         pos.col++;
@@ -68,18 +68,54 @@ namespace calcl {
 
       if (isdigit(c)) { return read_num(cx, pos, in); }
 
-      if (isgraph(c)) {
+      if (isgraph(c)) {        
         Pos p(pos);
         Val id(read_id(cx, pos, in));
         bool is_const = false;
         
         if (id.as_sym == cx.intern(p, "const")) {
           is_const = true;
-          cidk::skip_ws(pos, in);
+          skip_ws(pos, in);
           id = read_id(cx, pos, in);
+        } else if (in.get(c) && c == '(') {
+          pos.col++;
+          auto args(read_list(cx, pos, in));
+          auto &al(args.as_list->items);
+
+          if (!al.empty()) {
+            for (auto i(al.begin()+1); i <= al.end(); i++) {
+              if ((i = al.emplace(i, cx.meta_type, &cx.num_type)+1) == al.end()) {
+                break;
+              }
+            };
+          }
+
+          skip_ws(pos, in);
+          
+          if (!in.get(c) || c != '=') {
+            throw ESys(p, "Invalid function definition: ", c);
+          }
+          
+          List *rets(cx.list_type.pool.get(cx));
+          rets->items.emplace_back(cx.meta_type, &cx.num_type);
+          skip_ws(pos, in);
+
+          if (!in.get(c) || c != '(') {
+            throw ESys(p, "Invalid function body: ", c);
+          }
+
+          pos.col++;
+          auto body(read_group(cx, pos, in));
+          
+          out.emplace_back(cx, p, ops::Defun,
+                           id, args, Val(cx.list_type, rets), body);
+
+          return read_next(cx, pos, in, out);
+        } else if (!in.eof()) {
+          in.unget();
         }
         
-        cidk::skip_ws(pos, in);
+        skip_ws(pos, in);
 
         if (in.get(c)) {
           if (c == '=') {
@@ -95,15 +131,15 @@ namespace calcl {
             }
 
             return read_next(cx, pos, in, out);
-          } else if (is_const) {
-            throw ESys(p, "Missing assignment");
           }
 
-          in.unget();
-          return id;
-        } else {
-          return id;
+          if (is_const) {
+            throw ESys(p, "Missing assignment");
+          }          
         }
+
+        in.unget();
+        return id;
       }
       
       throw ESys(pos, "Invalid input: ", c);
@@ -112,16 +148,24 @@ namespace calcl {
     return {};
   }
 
-  Val read_group(Cx &cx, Pos &pos, istream &in) {
+  Val read_group(Cx &cx, Pos &pos, istream &in, bool env) {
     Pos p(pos);
-    Expr *out(cx.expr_type.pool.get(cx)), *body(cx.expr_type.pool.get(cx));
-    out->ops.emplace_back(cx, p, ops::Do, Val(cx.expr_type, body));
-    auto &bops(body->ops);
+    Expr *out(cx.expr_type.pool.get(cx));
+    Ops *bops(nullptr);
+    
+    if (env) {
+      Expr *body(cx.expr_type.pool.get(cx));
+      out->ops.emplace_back(cx, p, ops::Do, Val(cx.expr_type, body));
+      bops = &body->ops;
+    } else {
+      bops = &out->ops;
+    }
+    
     char c(0);
     
     for (;;) {
       skip_ws(pos, in);
-      if (!in.get(c)) { throw ESys(pos, "Open group"); }
+      if (!in.get(c)) { throw ESys(p, "Open group"); }
 
       if (c == ')') {
         pos.col++;
@@ -129,8 +173,8 @@ namespace calcl {
       }
 
       in.unget();
-      auto r(bops.empty() ? read3 : read2);
-      if (!r(cx, pos, in, bops)) { throw ESys(pos, "Open group"); }
+      auto r(bops->empty() ? read3 : read2);
+      r(cx, pos, in, *bops);
     }
 
     return Val(cx.expr_type, out);
