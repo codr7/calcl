@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
       Ops ops;  
       Opts opts;
       cx.load(Pos::_, a, cidk::read_ops, cx.env, ops, opts);
-      cx.eval(ops, cx.env, cx.regp);
+      cx.eval(ops, cx.env, cx.alloc_regs(opts.regs.size()));
 
       for (Val *v(cx.regp); v < cx.regp + opts.regs.size(); v++) {
         if (v->type) { cx.env.set(cx, Pos::_, v->id, *v, true); }

@@ -34,7 +34,7 @@ namespace calcl {
             throw ESys(eid.pos, "Unknown id: ", eid.id);
           }
           
-          cx.eval(ops, cx.env, cx.regp);
+          cx.eval(ops, cx.env, cx.alloc_regs(opts.regs.size()));
 
           for (Val *v(cx.regp); v < cx.regp + opts.regs.size(); v++) {
             if (v->type) { cx.env.set(cx, p, v->id, *v, true); }

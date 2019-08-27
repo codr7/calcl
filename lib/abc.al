@@ -9,3 +9,6 @@ defun %(x Num y Num)(Num) {
   dispatch *;
   dispatch -;
 };
+
+defun %%(x Num y Num)(Num) { calc(x - ((x / y) * y)); };
+

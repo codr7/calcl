@@ -116,7 +116,7 @@ $ cidk test.al
 ```
 
 ### Extending
-The functionality of calcl may be extended using [cidk](https://github.com/codr7/cidk) assembler, or any language capable of emitting the same. The following example implements a modulo operator in assembler.
+The functionality of calcl may be extended using [cidk](https://github.com/codr7/cidk) assembler, or any language capable of emitting the same. The following example implements a generic modulo operator in assembler.
 
 [lib/abc.al](lib/abc.al)
 ```
@@ -141,6 +141,12 @@ Empty input clears stack and Ctrl+D exits.
 
   1.0 % 0.3
 0.1
+```
+
+A more convenient, but slightly slower, option is using the `calc` opcode. The reason for the slowdown is an extra push of `x`, which is simplified to `cp` above; something the current compiler isn't capable of. Otherwise the generated code looks mostly the same and is inlined at compile time.
+
+```
+  defun %(x Num y Num)(Num) { calc(x - ((x / y) * y)); };
 ```
 
 ### License
