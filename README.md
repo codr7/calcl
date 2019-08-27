@@ -41,21 +41,21 @@ $ calcl ../test/run.al
 ```
 
 ### Semantics
-Operands are required to be separated by whitespace and are read and processed left to right.
+Operands are required to be separated by whitespace and are evaluated left to right.
 
 ```
   1 + 2 * 3
 9
 ```
 
-Groups may be used to control evaluation order.
+Groups may be used to change evaluation order.
 
 ```
   1 + (2 * 3)
 7
 ```
 
-The result may be referenced using `_`.
+Results may be referenced using `_`.
 
 ```
   1
