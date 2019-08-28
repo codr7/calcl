@@ -1,8 +1,2 @@
-* add math.sqrt/^[fix int]
-** multiply val and leave scale
-* add dispatch nargs
-** pass to ops
-* create dasl lang
-** add das op
 * add :compile command
 ** dump ops
