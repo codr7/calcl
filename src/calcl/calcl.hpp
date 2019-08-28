@@ -2,7 +2,7 @@
 #define CALCL_HPP
 
 namespace calcl {
-  const int VERSION = 4;
+  const int VERSION = 5;
 }
 
 #endif

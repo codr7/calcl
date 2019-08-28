@@ -81,7 +81,16 @@ namespace calcl {
           pos.col++;
           auto args(read_list(cx, pos, in));
           auto &al(args.as_list->items);
-
+          skip_ws(pos, in);
+          
+          if (!in.get(c) || c != '=') {
+            in.unget();
+            Expr *out(cx.expr_type.pool.get(cx));
+            for (auto &v: al) { out->ops.emplace_back(cx, p, ops::Push, v); }
+            out->ops.emplace_back(cx, p, ops::Dispatch, id);
+            return Val(cx.expr_type, out);              
+          }
+          
           if (!al.empty()) {
             for (auto i(al.begin()+1); i <= al.end(); i++) {
               if ((i = al.emplace(i, cx.meta_type, &cx.num_type)+1) == al.end()) {
@@ -90,12 +99,6 @@ namespace calcl {
             };
           }
 
-          skip_ws(pos, in);
-          
-          if (!in.get(c) || c != '=') {
-            throw ESys(p, "Invalid function definition: ", c);
-          }
-          
           List *rets(cx.list_type.pool.get(cx));
           rets->items.emplace_back(cx.meta_type, &cx.num_type);
           skip_ws(pos, in);

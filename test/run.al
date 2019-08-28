@@ -25,10 +25,22 @@ clock 1000 {
   check({cp;}) {is 3.14;};
 
   do {
+      calc(add-seven(x) = (x + 7));
+      calc(add-seven(35));
+      check({cp;}) {is 42;};
+  };
+  
+  do {
       calc(mod(x y) = (x - ((x / y) * y)));
       calc(1.0 mod 0.3);
       check({cp;}) {is 0.1;};
   };
+
+  calc(7 ^ 2);
+  check({cp;}) {is 49;};
+
+  calc(sqrt(49));
+  check({cp;}) {is 7;};
 };
 
 dump;

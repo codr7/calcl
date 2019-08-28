@@ -9,7 +9,7 @@ $ rlwrap calcl
 Press Return to evaluate.
 Empty input clears stack and Ctrl+D exits.
 
-  2 + (4 * 10)
+  (7 ^ 2) - 7
 42
 ```
 
@@ -101,7 +101,17 @@ n/a
 ```
 
 ### Functions
-Functions may be defined by specifying an (optionally empty) argument list directly following the bound id. Binary functions may be used as operators.
+Functions may be defined by specifying an (optionally empty) argument list directly following the id in a binding.
+
+```
+  add-seven(x) = (x + 7)
+n/a
+
+  add-seven(35)
+42
+```
+
+Binary functions may be called as operators.
 
 ```
   mod(x y) = (x - ((x / y) * y))
@@ -153,7 +163,7 @@ Empty input clears stack and Ctrl+D exits.
 0.1
 ```
 
-A more convenient, but slightly slower, option is using the `calc` opcode. The reason for the slowdown is an extra push of `x`, which is simplified to `cp` above; something the current compiler isn't smart enough to do. Besides that minor difference, the same code is generated and inlined at compile time.
+A more convenient but slightly slower option is using the `calc` opcode. The reason for the slowdown is an extra push of `x`, which is simplified to `cp` above; something the current compiler isn't smart enough to do. Besides this minor difference, the same code is generated and inlined at compile time.
 
 ```
 calc(%(x y) = (x - ((x / y) * y)))
