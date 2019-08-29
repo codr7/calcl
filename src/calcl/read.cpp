@@ -27,7 +27,7 @@ namespace calcl {
     if (!op) { return false; }
     vp = pos;
     if (!read_val(cx, pos, in, out)) { throw ESys(vp, "Missing right operand"); }
-    out.emplace_back(cx, pos, ops::Dispatch, *op);
+    out.emplace_back(cx, pos, ops::Dispatch, *op, Val(cx.int_type, Int(2)));
     return true;
   }
 
@@ -87,8 +87,11 @@ namespace calcl {
             in.unget();
             Expr *out(cx.expr_type.pool.get(cx));
             for (auto &v: al) { out->ops.emplace_back(cx, p, ops::Push, v); }
-            out->ops.emplace_back(cx, p, ops::Dispatch, id);
-            return Val(cx.expr_type, out);              
+            
+            out->ops.emplace_back(cx, p, ops::Dispatch,
+                                  id, Val(cx.int_type, Int(al.size())));
+
+            return Val(cx.expr_type, out);
           }
           
           if (!al.empty()) {
