@@ -86,6 +86,7 @@ namespace calcl {
           if (!in.get(c) || c != '=') {
             in.unget();
             Expr *out(cx.expr_type.pool.get(cx));
+            out->flags += Expr::INLINE;
             for (auto &v: al) { out->ops.emplace_back(cx, p, ops::Push, v); }
             
             out->ops.emplace_back(cx, p, ops::Dispatch,
@@ -157,6 +158,7 @@ namespace calcl {
   Val read_group(Cx &cx, Pos &pos, istream &in, bool env) {
     Pos p(pos);
     Expr *out(cx.expr_type.pool.get(cx));
+    out->flags += Expr::INLINE;
     Ops *bops(nullptr);
     
     if (env) {
