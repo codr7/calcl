@@ -29,7 +29,7 @@ clock 1000 {
       calc(add-seven(35));
       check({cp;}) {is 42;};
   };
-  
+
   do {
       calc(mod(x y) = (x - ((x / y) * y)));
       calc(1.0 mod 0.3);

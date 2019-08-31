@@ -158,7 +158,6 @@ namespace calcl {
   Val read_group(Cx &cx, Pos &pos, istream &in, bool env) {
     Pos p(pos);
     Expr *out(cx.expr_type.pool.get(cx));
-    out->flags += Expr::INLINE;
     Ops *bops(nullptr);
     
     if (env) {
