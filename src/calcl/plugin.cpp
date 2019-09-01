@@ -6,6 +6,6 @@
 using namespace std;
 using namespace calcl;
 
-void cidk_pluginit(Cx &cx) {
+void cidk_pluginit(Cx &cx, const Pos &) {
   cx.add_op_type(ops::Calc);
 }

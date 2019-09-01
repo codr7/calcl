@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
   Lib &math(libs::init_math(cx, Pos::_));
   cx.env.use(cx, Pos::_, math.env);
   
-  cidk_pluginit(cx);
+  cidk_pluginit(cx, Pos::_);
   Mode m(Mode::nil);
 
   while (--argc && ++argv) {

@@ -3,11 +3,12 @@
 
 namespace cidk {
   struct Cx;
+  struct Pos;
 }
 
 using namespace cidk;
 
 extern "C"
-void cidk_pluginit(Cx &cx);
+void cidk_pluginit(Cx &cx, const Pos &);
 
 #endif
