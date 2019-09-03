@@ -24,7 +24,7 @@ namespace calcl {
         try {
           stringstream in(line);
 
-          Pos p("n/a");
+          Pos p;
           Ops ops;
           Opts opts;
           read(cx, p, in, ops);

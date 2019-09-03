@@ -92,7 +92,7 @@ Rebinding a constant results in a compile time error.
 
 ```
   (const foo = 7 (foo = 42 foo))
-Error in "n/a" at row 1, col 16:
+Error at row 1, col 16:
 Const let: foo
 n/a
 
