@@ -64,6 +64,13 @@ Results may be popped using `_`.
 7
 ```
 
+Prefixing integers with `0x` triggers hex decoding.
+
+```
+  0x15 * 2
+42
+```
+
 Decimal numbers are implemented as fix point, and infer precision from literals.
 
 ```

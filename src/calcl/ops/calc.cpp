@@ -13,14 +13,9 @@ namespace calcl::ops {
 
   void CalcType::init(Cx &cx, Op &op, const Val &expr) const { op.args[0] = expr; }
 
-  void CalcType::compile(Cx &cx,
-                          OpIter &in,
-                          const OpIter &end,
-                          Env &env,
-                          Ops &out,
-                          Opts &opts) const {
-    auto &p(in->pos);
-    auto &expr(in->args[0]);
+  void CalcType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &expr(op.args[0]);
     expr.compile(p, env, opts);
     if (expr.type != &cx.expr_type) { throw ESys(p, "Invalid group", expr); }
     auto &ops(expr.as_expr->ops);
