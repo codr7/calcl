@@ -96,11 +96,11 @@ namespace calcl {
           }
           
           if (!al.empty()) {
-            for (auto i(al.begin()+1); i <= al.end(); i++) {
-              if ((i = al.emplace(i, cx.meta_type, &cx.num_type)+1) == al.end()) {
-                break;
-              }
-            };
+            Val nt(cx.meta_type, &cx.num_type);
+            
+            for (auto &id: al) {
+              id.reset(cx.pair_type, cx.pair_type.pool.get(cx, id, nt)); 
+            }
           }
 
           List *rets(cx.list_type.pool.get(cx));

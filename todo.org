@@ -1,2 +1,4 @@
+* add :hex/dec commands
+** switch output encoding
 * add :compile command
 ** dump ops
